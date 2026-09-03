@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
+    <meta name="description" content="Aplikasi pencatatan penjualan dan pengeluaran kedai harian dengan fitur PWA, Auto-Save, dan integrasi WhatsApp.">
     <title>Laporan Penjualan</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -20,7 +21,7 @@
                     <button class="btn-text" id="btn-reset" style="color: var(--danger);">Reset</button>
                 </div>
             </div>
-            <input type="date" id="report-date" class="input-base">
+            <input type="date" id="report-date" class="input-base" aria-label="Pilih tanggal laporan">
         </header>
 
         <main>
@@ -53,7 +54,7 @@
 
             <!-- Output -->
             <section class="result-container hidden" id="result-container">
-                <textarea id="report-output" readonly></textarea>
+                <textarea id="report-output" readonly aria-label="Hasil Laporan Teks"></textarea>
                 <div class="result-actions">
                     <button class="btn-secondary" id="copy-btn">Salin</button>
                     <button class="btn-success" id="wa-btn">Kirim WhatsApp</button>
@@ -67,7 +68,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Riwayat Laporan</h2>
-                <button id="close-history" class="btn-close">✕</button>
+                <button id="close-history" class="btn-close" aria-label="Tutup riwayat">✕</button>
             </div>
             <div id="history-list" class="history-list">
                 <!-- History items -->
@@ -75,6 +76,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

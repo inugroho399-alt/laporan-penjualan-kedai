@@ -88,13 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = document.createElement('div');
         item.className = 'list-item';
         item.innerHTML = `
-            <input type="text" class="input-base item-name" placeholder="Item (mis: Es Teh)" value="${name}">
+            <input type="text" class="input-base item-name" placeholder="Item (mis: Es Teh)" value="${name}" aria-label="Nama Menu Penjualan">
             <div class="counter-group">
-                <button type="button" class="btn-counter btn-minus" tabindex="-1">-</button>
-                <input type="number" class="input-base item-qty text-center" placeholder="0" value="${qty}" min="0">
-                <button type="button" class="btn-counter btn-plus" tabindex="-1">+</button>
+                <button type="button" class="btn-counter btn-minus" tabindex="-1" aria-label="Kurangi jumlah">-</button>
+                <input type="number" class="input-base item-qty text-center" placeholder="0" value="${qty}" min="0" aria-label="Jumlah terjual">
+                <button type="button" class="btn-counter btn-plus" tabindex="-1" aria-label="Tambah jumlah">+</button>
             </div>
-            <button type="button" class="btn-delete" title="Hapus" tabindex="-1">✕</button>
+            <button type="button" class="btn-delete" title="Hapus" tabindex="-1" aria-label="Hapus menu">✕</button>
         `;
 
         const nameInput = item.querySelector('.item-name');
@@ -129,9 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = document.createElement('div');
         item.className = 'list-item';
         item.innerHTML = `
-            <input type="text" class="input-base item-name" placeholder="Item (mis: Cup)" value="${name}">
-            <input type="text" class="input-base item-qty" placeholder="Nominal" value="${amount}">
-            <button type="button" class="btn-delete" title="Hapus" tabindex="-1">✕</button>
+            <input type="text" class="input-base item-name" placeholder="Item (mis: Cup)" value="${name}" aria-label="Nama item pengeluaran">
+            <input type="text" class="input-base item-qty" placeholder="Nominal" value="${amount}" aria-label="Nominal pengeluaran">
+            <button type="button" class="btn-delete" title="Hapus" tabindex="-1" aria-label="Hapus pengeluaran">✕</button>
         `;
 
         const nameInput = item.querySelector('.item-name');
