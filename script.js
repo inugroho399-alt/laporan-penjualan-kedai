@@ -18,6 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyBtn = document.getElementById('copy-btn');
     const waBtn = document.getElementById('wa-btn');
 
+    const btnReset = document.getElementById('btn-reset');
+    const btnHistory = document.getElementById('btn-history');
+    const historyModal = document.getElementById('history-modal');
+    const closeHistory = document.getElementById('close-history');
+    const historyList = document.getElementById('history-list');
+
     // Load saved data or initialize defaults
     loadData();
 
@@ -31,13 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
         saveData();
     });
 
-    // Save when date changes
     dateInput.addEventListener('change', saveData);
 
+    // Reset Button
+    btnReset.addEventListener('click', () => {
+        if (confirm('Yakin ingin mengosongkan semua angka ke 0? (Nama menu akan dipertahankan)')) {
+            document.querySelectorAll('.item-qty').forEach(input => {
+                if (input.type === 'number') input.value = '0';
+                else input.value = '';
+            });
+            saveData();
+        }
+    });
+
+    // History Modal
+    btnHistory.addEventListener('click', () => {
+        renderHistory();
+        historyModal.classList.remove('hidden');
+    });
+
+    closeHistory.addEventListener('click', () => {
+        historyModal.classList.add('hidden');
+    });
+
     generateBtn.addEventListener('click', () => {
-        generateReport();
+        const report = generateReport();
         resultContainer.classList.remove('hidden');
         resultContainer.scrollIntoView({ behavior: 'smooth' });
+        
+        // Simpan ke riwayat saat dibuat
+        saveToHistory(dateInput.value, report);
     });
 
     copyBtn.addEventListener('click', () => {
@@ -150,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = JSON.parse(savedData);
                 const todayStr = new Date().toISOString().split('T')[0];
                 
-                // Jika berganti hari, kita reset angkanya tapi tetap simpan nama menu
                 const isNewDay = data.date !== todayStr;
                 
                 dateInput.value = isNewDay ? todayStr : (data.date || todayStr);
@@ -172,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Default awal jika tidak ada data sama sekali
         dateInput.value = new Date().toISOString().split('T')[0];
         addSaleItem('Es Teh', '0');
         addSaleItem('Es Jeruk', '0');
@@ -195,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const qty = parseInt(item.querySelector('.item-qty').value.trim()) || 0;
             
             if (name && qty > 0) {
-                // Gunakan format huruf kapital standar (Capitalize) agar konsisten jika penulisan huruf kecil/besar berbeda
                 const standardName = name.charAt(0).toUpperCase() + name.slice(1);
                 salesMap[standardName] = (salesMap[standardName] || 0) + qty;
             }
@@ -250,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.usesK && data.total % 1000 === 0) {
                     expensesText += `- ${name} = ${data.total / 1000}k\n`;
                 } else {
-                    // Akan format misal 20000 jadi 20.000
                     expensesText += `- ${name} = ${data.total.toLocaleString('id-ID')}\n`;
                 }
             }
@@ -260,6 +285,64 @@ document.addEventListener('DOMContentLoaded', () => {
         report += hasExpenses ? expensesText : `Pengeluaran:\n- Belum ada data\n`;
         
         reportOutput.value = report;
+        return report;
+    }
+
+    function saveToHistory(date, text) {
+        let history = JSON.parse(localStorage.getItem('laporan_kedai_history') || '[]');
+        const existingIndex = history.findIndex(h => h.date === date);
+        if (existingIndex >= 0) {
+            history[existingIndex].text = text;
+        } else {
+            history.unshift({ date, text });
+        }
+        // Simpan hanya 30 hari terakhir
+        if (history.length > 30) history = history.slice(0, 30);
+        localStorage.setItem('laporan_kedai_history', JSON.stringify(history));
+    }
+
+    function renderHistory() {
+        let history = JSON.parse(localStorage.getItem('laporan_kedai_history') || '[]');
+        historyList.innerHTML = '';
+        
+        if (history.length === 0) {
+            historyList.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Belum ada riwayat laporan tersimpan.</p>';
+            return;
+        }
+        
+        history.forEach((h, index) => {
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            div.innerHTML = `
+                <div class="history-date">${formatDate(h.date)}</div>
+                <div class="history-text">${h.text}</div>
+                <div class="history-actions">
+                    <button class="btn-secondary btn-sm copy-hist">Salin</button>
+                    <button class="btn-success btn-sm wa-hist">Kirim WA</button>
+                    <button class="btn-secondary btn-sm del-hist" style="color:var(--danger); border-color:var(--danger);">Hapus</button>
+                </div>
+            `;
+            
+            div.querySelector('.copy-hist').addEventListener('click', (e) => {
+                navigator.clipboard.writeText(h.text);
+                e.target.textContent = 'Tersalin!';
+                setTimeout(() => e.target.textContent = 'Salin', 2000);
+            });
+            
+            div.querySelector('.wa-hist').addEventListener('click', () => {
+                window.open(`https://wa.me/?text=${encodeURIComponent(h.text)}`, '_blank');
+            });
+            
+            div.querySelector('.del-hist').addEventListener('click', () => {
+                if(confirm('Yakin ingin menghapus riwayat ini?')) {
+                    history.splice(index, 1);
+                    localStorage.setItem('laporan_kedai_history', JSON.stringify(history));
+                    renderHistory(); // Re-render
+                }
+            });
+            
+            historyList.appendChild(div);
+        });
     }
 
     function formatDate(dateString) {

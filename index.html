@@ -13,7 +13,13 @@
 <body>
     <div class="container">
         <header>
-            <h1>Laporan Harian</h1>
+            <div class="header-top">
+                <h1>Laporan Harian</h1>
+                <div class="header-actions">
+                    <button class="btn-icon-top" id="btn-history" title="Riwayat Laporan">📜</button>
+                    <button class="btn-icon-top" id="btn-reset" title="Reset Angka">🔄</button>
+                </div>
+            </div>
             <input type="date" id="report-date" class="input-base">
         </header>
 
@@ -55,6 +61,20 @@
             </section>
         </main>
     </div>
+
+    <!-- Modal History -->
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Riwayat Laporan</h2>
+                <button id="close-history" class="btn-close">✕</button>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- History items -->
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
