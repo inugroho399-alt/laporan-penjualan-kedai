@@ -9,6 +9,7 @@ Aplikasi web sederhana yang sangat cepat, ringan, dan **mobile-friendly** untuk 
 - **Smart Expense Parser**: Dapat mendeteksi dan menjumlahkan nominal pengeluaran secara cerdas. Anda dapat menggunakan format angka standar (`20000`) atau singkatan modern (`20k`), dan aplikasi akan otomatis menghitung totalnya secara akurat.
 - **Auto-Merge Data**: Tidak perlu khawatir jika tidak sengaja memasukkan menu yang sama dua kali. Aplikasi akan secara otomatis mengelompokkan dan menjumlahkan item dengan nama yang sama (misal: "Es Teh = 3" dan "Es Teh = 2" otomatis menjadi "Es Teh = 5").
 - **Auto-Save (Local Storage)**: Semua data yang Anda ketik atau tambahkan otomatis tersimpan di dalam *cache/storage* browser. Jika tab tidak sengaja tertutup atau ter-refresh, data Anda 100% aman dan tidak hilang.
+- **Support Offline & PWA**: Aplikasi ini adalah *Progressive Web App (PWA)* yang dilengkapi dengan *Service Worker*. Anda dapat menginstalnya sebagai aplikasi mandiri di *Homescreen* HP Anda dan membukanya meskipun **tanpa koneksi internet (offline)**.
 - **Auto-Reset Harian**: Sangat cocok untuk rutinitas harian! Saat Anda membuka aplikasi pada **hari yang baru** (pergantian tanggal), daftar menu yang sudah Anda daftarkan akan dipertahankan, namun angka/counternya akan otomatis dikembalikan ke `0`.
 - **Integrasi WhatsApp**: Cukup dengan satu klik, teks hasil laporan harian bisa disalin atau langsung diteruskan (*forward*) menuju aplikasi WhatsApp Anda.
 
