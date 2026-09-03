@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Laporan Penjualan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Laporan Harian</h1>
+            <input type="date" id="report-date" class="input-base">
+        </header>
+
+        <main>
+            <!-- Penjualan Section -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h2>Penjualan</h2>
+                    <button class="btn-text" id="add-sale">+ Tambah</button>
+                </div>
+                <div class="list-container" id="sales-list">
+                    <!-- Dynamic items -->
+                </div>
+            </section>
+
+            <!-- Pengeluaran Section -->
+            <section class="section-block">
+                <div class="section-header">
+                    <h2>Pengeluaran</h2>
+                    <button class="btn-text" id="add-expense">+ Tambah</button>
+                </div>
+                <div class="list-container" id="expenses-list">
+                    <!-- Dynamic items -->
+                </div>
+            </section>
+
+            <!-- Actions -->
+            <section class="action-section">
+                <button class="btn-primary" id="generate-btn">Buat Laporan</button>
+            </section>
+
+            <!-- Output -->
+            <section class="result-container hidden" id="result-container">
+                <textarea id="report-output" readonly></textarea>
+                <div class="result-actions">
+                    <button class="btn-secondary" id="copy-btn">Salin</button>
+                    <button class="btn-success" id="wa-btn">Kirim WhatsApp</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
