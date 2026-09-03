@@ -1,11 +1,11 @@
-const CACHE_NAME = 'laporan-kedai-v2';
+const CACHE_NAME = 'laporan-kedai-v3';
 const ASSETS = [
     './',
     './index.html',
-    './styles.css',
-    './script.js',
+    './css/styles.css',
+    './js/script.js',
     './manifest.json',
-    './icon.svg'
+    './assets/icon.svg'
 ];
 
 self.addEventListener('install', (e) => {
