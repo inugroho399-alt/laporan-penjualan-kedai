@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker terdaftar!', reg))
+            .catch(err => console.error('Service Worker gagal terdaftar', err));
+    }
+
     const dateInput = document.getElementById('report-date');
     const salesList = document.getElementById('sales-list');
     const expensesList = document.getElementById('expenses-list');
